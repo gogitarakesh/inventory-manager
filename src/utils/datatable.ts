@@ -7,8 +7,7 @@ export const getAllKeysFromData = (data: Inventory): string[] => {
 }
 
 export const cleanValue = (key: string): string => {
-	
-	return key.replace(/_/g, " ").toUpperCase();
+	return key.replace(/[^A-Z0-9]/ig, " ").toUpperCase();
 }
 
 export const getSortedData = (data: Inventory, sortKey: string, sortOrder: SortOptions) =>  {
