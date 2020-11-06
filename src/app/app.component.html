@@ -1,0 +1,62 @@
+<h1>{{ title }}</h1>
+<div class="flex-container">
+  <div>
+    <label for="stockFilter">Filter By: </label>
+    <select
+      name="stockFilter"
+      id="stockfilter"
+      (change)="onStockFilterChange($event)"
+    >
+      <option
+        *ngFor="let option of stockFilterOptions"
+        value="{{ option.value }}"
+      >
+        {{ option.name }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <label for="searchTitles">Search </label>
+    <input
+      type="text"
+      #searchInput
+      placeholder="Search by title"
+      (keyup)="onSearchInput(searchInput.value)"
+    />
+  </div>
+</div>
+<table>
+  <caption>
+    Product Summary
+  </caption>
+  <thead>
+    <tr>
+      <th
+        *ngFor="let header of getTableHeaders(products)"
+        (click)="sortItems(header)"
+      >
+        <span>
+          {{transformKeyHeader(header)}}
+          <fa-icon [icon]="faSortIcon"></fa-icon>
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of filteredData">
+      <td data-label="Product ID">{{ product.product_id }}</td>
+      <td data-label="Amazon Image Url" class="image-cell">
+        <img src="{{ product.amazon_image_url }}" alt="" />
+      </td>
+      <td data-label="ASIN">{{ product.asin }}</td>
+      <td data-label="Title" class="title-cell">
+        <a
+          href="{{getLinkUrl(product.title, product.asin)}}"
+          >{{ product.title }}</a
+        >
+      </td>
+      <td data-label="Inventory Level">{{ product.inventory_level }}</td>
+      <td data-label="Lead Time">{{ product.lead_time }} days</td>
+    </tr>
+  </tbody>
+</table>
